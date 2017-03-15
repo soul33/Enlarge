@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #l_div{
+            width: 400px;
+            height: 400px;
+            background: url("image/400.jpg") no-repeat;
+            border: solid 1px #ccc;
+            float: left;
+            position: relative;
+            margin: 15px;
+        }
+        #l_div img{
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+        }
+        #box_k{
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #fff;
+            opacity: 0;
+            filter: alpah(opacity=0);
+        }
+        #box{
+            width: 220px;
+            height: 200px;
+            background: #ddd;
+            opacity: 0.7;
+            filter: alpah(opacity=70);
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        #r_div{
+            width: 440px;
+            height: 400px;
+            float: left;
+            border: 1px solid #666;
+            overflow: hidden;
+            position: relative;
+            display: none;
+            margin: 15px;
+        }
+        #r_div img{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var l_div = document.getElementById('l_div');
+            var box_k = document.getElementById('box_k');
+            var box = document.getElementById('box');
+            var r_div = document.getElementById('r_div');
+            var r_img = document.getElementById('r_img');
+
+            //鼠标移动
+            box_k.onmousemove = function(e){
+                var ev = window.event || e;
+                var m_left = ev.offsetX || ev.layerX;
+                var m_top = ev.offsetY || ev.layerY;
+                //document.title = m_left+'|'+m_top;
+
+                //计算位置
+                var box_left = m_left - 110;
+                var box_top = m_top - 100;
+
+                //判断
+                if(box_left<0){
+                    box_left = 0;
+                }
+                if(box_left>180){
+                    box_left = 180;
+                }
+                if(box_top<0){
+                    box_top = 0;
+                }
+                if(box_top>200){
+                    box_top = 200;
+                }
+
+                //赋值
+                box.style.left = box_left+'px';
+                box.style.top = box_top+'px';
+
+                //右边图片
+                var r_pic_left = box_left*-2;
+                var r_pic_top = box_top*-2;
+                r_img.style.left = r_pic_left+'px';
+                r_img.style.top = r_pic_top+'px';
+            }
+            
+            //左边鼠标移入
+            box_k.onmouseover = function(){
+                box.style.display = 'block';
+                r_div.style.display = 'block';
+            }
+            box_k.onmouseout = function(){
+                box.style.display = 'none';
+                r_div.style.display = 'none'; 
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="l_div">
+        <div id="box"></div> 
+        <div id="box_k"></div>
+        <img src="image/large.png"/>
+    </div>
+    <div id="r_div">
+        <img id="r_img" src="image/800.jpg"/>
+    </div>
+    
+</body>
+</html>
